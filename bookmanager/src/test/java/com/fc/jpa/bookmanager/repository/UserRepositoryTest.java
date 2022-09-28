@@ -109,8 +109,23 @@ class UserRepositoryTest {
         //ExampleMatcher가 있을 경우 like 검색, 없을경우 exact 검생
         Example<User> example = Example.of(new User("sonix", "naver.com"), matcher); //probe(첫번째 파라미터)는 matcher 에 따라 조회할 조건을 의미하는 가짜 Entity
         userRepository.findAll(example).forEach(System.out::println);
+    }
 
+    @Test
+    public void update(){
+        userRepository.save(new User("david", "david@naver.com"));
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user.setEmail("update@naver.com");
 
+        //data가 존재하는지 확인하고 update를 실행한다.
+        userRepository.save(user);
+        userRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    public void select(){
+        init();
+        System.out.println(userRepository.findByName("test10"));
     }
 
 }
