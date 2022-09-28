@@ -5,19 +5,30 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
 class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    public void init(){
+        List<User> saveUsers = new ArrayList<>();
+        for(int i = 0; i < 20; i++) {
+            User user = new User();
+            user.setName("test"+((i+1)*10));
+            user.setEmail(user.getName()+"@naver.com");
+            saveUsers.add(user);
+        }
+        userRepository.saveAll(saveUsers);
+
+    }
 
     @Test
     void crud(){
@@ -69,6 +80,37 @@ class UserRepositoryTest {
     @Test
     public void delete(){
         userRepository.delete(userRepository.findById(1L).orElseThrow(RuntimeException::new));
-        
+
+        userRepository.deleteAll(); // data의 개수만큼 select 후 삭제하기 때문에 성능 이슈가 발생함 (대용량의 데이터일 경우)
+        userRepository.deleteAllInBatch(); // delete 쿼리만 한번 실행함
     }
+
+    //페이징처리 방법
+    @Test
+    public void paging(){
+        init();
+        //0베이스로 시작하기 때문에 2 page가 리턴된다.
+        Page<User> users = userRepository.findAll(PageRequest.of(1, 3));
+        System.out.println("page : " + users);
+        System.out.println("total Elements : " + users.getTotalElements()); // 총갯수
+        System.out.println("total pages : " + users.getTotalPages());
+        System.out.println("number of elements : " + users.getNumberOfElements());
+        System.out.println("sort : " + users.getSort());
+        System.out.println("size : " + users.getSize());
+        users.getContent().forEach(System.out::println);
+    }
+
+    @Test //query by example(QBE) : entity를 example로 만들고 matcher를 추가하여 선언함으로 필요한 쿼리를 만드는 방법
+    public void qbe(){
+        init();
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("name")
+                .withMatcher("email", endsWith());
+        //ExampleMatcher가 있을 경우 like 검색, 없을경우 exact 검생
+        Example<User> example = Example.of(new User("sonix", "naver.com"), matcher); //probe(첫번째 파라미터)는 matcher 에 따라 조회할 조건을 의미하는 가짜 Entity
+        userRepository.findAll(example).forEach(System.out::println);
+
+
+    }
+
 }
