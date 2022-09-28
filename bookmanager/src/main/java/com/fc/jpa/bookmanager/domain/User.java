@@ -3,10 +3,7 @@ package com.fc.jpa.bookmanager.domain;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -18,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name ="USER_TABLE")
 public class User {
     @Id // 테이블의 primary key로 선언
-    @GeneratedValue //숫자는 자동으로 증가됨 index의 역할
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //숫자는 자동으로 증가됨 index의 역할
     private long id;
 
     @NonNull
