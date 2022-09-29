@@ -9,6 +9,7 @@ import org.springframework.data.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
@@ -126,6 +127,16 @@ class UserRepositoryTest {
     public void select(){
         init();
         System.out.println(userRepository.findByName("test10"));
+        System.out.println(userRepository.streamByName("test10"));
+        System.out.println(userRepository.searchByName("test10"));
+        System.out.println(userRepository.getByName("test10"));
+        System.out.println(userRepository.queryByName("test10"));
+        System.out.println(userRepository.readByName("test10"));
+        System.out.println(userRepository.findUserByName("test10"));
+
+        System.out.println(userRepository.findTop1ByName("test10")); //limit 1 쿼리문이 생성됨 (Top 뒤의 숫자의 수만큼 가져옴)
+        System.out.println(userRepository.findFirst1ByName("test10"));
+
     }
 
 }
