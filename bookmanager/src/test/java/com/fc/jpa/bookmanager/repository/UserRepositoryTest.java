@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,10 +22,11 @@ class UserRepositoryTest {
 
     public void init(){
         List<User> saveUsers = new ArrayList<>();
-        for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < 5; i++) {
             User user = new User();
-            user.setName("test"+((i+1)*10));
+            user.setName("test"+i);
             user.setEmail(user.getName()+"@naver.com");
+            user.setCreatedAt(LocalDateTime.now());
             saveUsers.add(user);
         }
         userRepository.saveAll(saveUsers);
@@ -137,6 +139,19 @@ class UserRepositoryTest {
         System.out.println(userRepository.findTop1ByName("test10")); //limit 1 쿼리문이 생성됨 (Top 뒤의 숫자의 수만큼 가져옴)
         System.out.println(userRepository.findFirst1ByName("test10"));
 
+    }
+
+    @Test
+    public void multiWherequery(){
+        init();
+        System.out.println(userRepository.findByEmailAndName( "test10@naver.com","test10"));
+        userRepository.findByEmailOrName("test1@naver.com", "test0").forEach(System.out::println);
+        System.out.println(userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
+        System.out.println(userRepository.findByIdBefore(3L));
+        userRepository.findByCreatedAtGreaterThan(LocalDateTime.now()).forEach(System.out::println);
+        userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now()).forEach(System.out::println);
+        userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)).forEach(System.out::println);
+        userRepository.findByIdBetween(2L, 5L).forEach(System.out::println);
     }
 
 }

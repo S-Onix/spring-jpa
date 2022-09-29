@@ -4,6 +4,7 @@ import com.fc.jpa.bookmanager.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,5 +23,15 @@ public interface UserRepository extends JpaRepository<User, Long/*테이블의 P
     User findUserByName(String name);
     List<User> findTop1ByName(String name);
     List<User> findFirst1ByName(String name);
+
+    //and , or 조건문
+    List<User> findByEmailAndName(String email, String name);
+    List<User> findByEmailOrName(String email, String name);
+    List<User> findByCreatedAtAfter(LocalDateTime yesterday); // createdAt보다 큰 값(After)을 조회
+    List<User> findByIdBefore(Long id); // createdAt보다 작은 값(Before)을 조회
+    List<User> findByCreatedAtGreaterThan(LocalDateTime yesterday); // > 보다 크다
+    List<User> findByCreatedAtGreaterThanEqual(LocalDateTime yesterday); // >= 크거나 같다
+    List<User> findByCreatedAtBetween(LocalDateTime yesterday, LocalDateTime tomorrow);// between yesterday ~ tomorrow
+    List<User> findByIdBetween(Long id1, Long id2);// between id1~id2
 
 }
