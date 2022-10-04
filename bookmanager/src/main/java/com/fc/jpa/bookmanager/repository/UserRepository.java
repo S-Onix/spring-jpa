@@ -33,5 +33,12 @@ public interface UserRepository extends JpaRepository<User, Long/*테이블의 P
     List<User> findByCreatedAtGreaterThanEqual(LocalDateTime yesterday); // >= 크거나 같다
     List<User> findByCreatedAtBetween(LocalDateTime yesterday, LocalDateTime tomorrow);// between yesterday ~ tomorrow
     List<User> findByIdBetween(Long id1, Long id2);// between id1~id2
+    
+    List<User> findByIdIsNotNull(); // where id is not null 구문
 
+    List<User> findByAddressesIsNotEmpty(); // exist 구문이다
+
+    List<User> findByNameIn(List<String> names);
+
+    List<User> findByNameNotIn(List<String> names);
 }

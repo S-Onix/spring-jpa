@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,5 +28,8 @@ public class User {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAp;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Address> addresses;
 
 }

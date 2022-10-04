@@ -9,6 +9,7 @@ import org.springframework.data.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -152,6 +153,20 @@ class UserRepositoryTest {
         userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now()).forEach(System.out::println);
         userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)).forEach(System.out::println);
         userRepository.findByIdBetween(2L, 5L).forEach(System.out::println);
+    }
+
+    @Test
+    public void notNull(){
+        init();
+        System.out.println(userRepository.findByAddressesIsNotEmpty()); // exist로 주소값이 일치하는 데이터가 있는지 조회한다.
+    }
+
+    @Test
+    public void inAndNotInQuert(){
+        init();
+
+        System.out.println(userRepository.findByNameIn(Arrays.asList("test01","test02","test07")));
+        System.out.println(userRepository.findByNameNotIn(Arrays.asList("test01","test02","test07")));
     }
 
 }
