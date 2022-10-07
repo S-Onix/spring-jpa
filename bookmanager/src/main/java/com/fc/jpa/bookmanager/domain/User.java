@@ -29,7 +29,7 @@ public class User {
 
     private LocalDateTime updatedAp;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Address> addresses;
+/*    @OneToMany(fetch = FetchType.EAGER)
+    private List<Address> addresses;*/
 
 }

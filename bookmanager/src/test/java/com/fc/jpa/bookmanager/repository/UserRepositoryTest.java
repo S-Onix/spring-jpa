@@ -158,7 +158,7 @@ class UserRepositoryTest {
     @Test
     public void notNull(){
         init();
-        System.out.println(userRepository.findByAddressesIsNotEmpty()); // exist로 주소값이 일치하는 데이터가 있는지 조회한다.
+        //System.out.println(userRepository.findByAddressesIsNotEmpty()); // exist로 주소값이 일치하는 데이터가 있는지 조회한다.
     }
 
     @Test
@@ -167,6 +167,39 @@ class UserRepositoryTest {
 
         System.out.println(userRepository.findByNameIn(Arrays.asList("test01","test02","test07")));
         System.out.println(userRepository.findByNameNotIn(Arrays.asList("test01","test02","test07")));
+    }
+
+    @Test
+    public void startWith(){
+        //like 검색을 제공함
+        // user0_.name like 'test%' escape ?
+        // == userRepository.findByNameLike("test%")
+        init();
+        System.out.println(userRepository.findByNameStartingWith("test"));
+        System.out.println(userRepository.findByNameStartsWith("test"));
+        System.out.println(userRepository.findByNameIsStartingWith("test"));
+    }
+
+    @Test
+    public void endWith(){
+        //like 검색
+        // user0_.name like '%test'
+        // == userRepository.findByNameLike("%test")
+        init();
+        System.out.println(userRepository.findByNameEndingWith("test"));
+        System.out.println(userRepository.findByNameEndsWith("test"));
+        System.out.println(userRepository.findByNameIsEndingWith("test"));
+    }
+
+    @Test
+    public void containWith(){
+        //like 검색
+        // user0_.name like '%test%'
+        // == userRepository.findByNameLike("%test%")
+        init();
+        System.out.println(userRepository.findByNameContaining("test"));
+        System.out.println(userRepository.findByNameContains("test"));
+        System.out.println(userRepository.findByNameIsContaining("test"));
     }
 
 }

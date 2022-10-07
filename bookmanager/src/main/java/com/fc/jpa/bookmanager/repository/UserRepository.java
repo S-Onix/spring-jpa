@@ -36,9 +36,23 @@ public interface UserRepository extends JpaRepository<User, Long/*테이블의 P
     
     List<User> findByIdIsNotNull(); // where id is not null 구문
 
-    List<User> findByAddressesIsNotEmpty(); // exist 구문이다
+    //List<User> findByAddressesIsNotEmpty(); // exist 구문이다
 
     List<User> findByNameIn(List<String> names);
 
     List<User> findByNameNotIn(List<String> names);
+    List<User> findByNameStartingWith(String name);
+    List<User> findByNameStartsWith(String name);
+    List<User> findByNameIsStartingWith(String name);
+
+    List<User> findByNameEndingWith(String name);
+    List<User> findByNameEndsWith(String name);
+    List<User> findByNameIsEndingWith(String name);
+
+    List<User> findByNameContaining(String name);
+    List<User> findByNameContains(String name);
+    List<User> findByNameIsContaining(String name);
+
+    List<User> findByNameLike(String name);
+
 }
