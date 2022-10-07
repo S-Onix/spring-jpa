@@ -202,4 +202,30 @@ class UserRepositoryTest {
         System.out.println(userRepository.findByNameIsContaining("test"));
     }
 
+    @Test
+    public void pagingSortingTest(){
+        init();
+        /*
+        *
+        where
+        user0_.name=?
+        and (
+            user0_.name like ? escape ?
+        ) limit ?
+        * */
+        System.out.println(userRepository.findFirstByNameAndNameStartingWith("test", "test")); //like 쿼리 + limit 1
+        System.out.println(userRepository.findTop1ByName("test10")); //limit 1
+        System.out.println(userRepository.findTop1ByNameOrderByIdDesc("test01")); // name 조건 + order by id desc + limit 1
+        System.out.println(userRepository.findFirst1ByNameOrderByIdDescEmailAsc("test01")); // order by id desc, email asc limit 1
+        System.out.println(userRepository.findFirstByName("test", getSort()));
+    }
+
+    private Sort getSort(){
+        return Sort.by(
+                Sort.Order.desc("name"),
+                Sort.Order.asc("email")
+        );
+    }
+
+
 }

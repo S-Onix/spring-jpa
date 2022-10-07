@@ -1,6 +1,7 @@
 package com.fc.jpa.bookmanager.repository;
 
 import com.fc.jpa.bookmanager.domain.User;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -54,5 +55,12 @@ public interface UserRepository extends JpaRepository<User, Long/*테이블의 P
     List<User> findByNameIsContaining(String name);
 
     List<User> findByNameLike(String name);
+
+    List<User> findFirstByNameAndNameStartingWith(String name, String name2);
+    List<User> findLast1ByName(String name); // Last가 무시되고 findByName으로 실행됨
+    List<User> findTop1ByNameOrderByIdDesc(String name);
+    List<User> findFirst1ByNameOrderByIdDescEmailAsc(String name);
+
+    List<User> findFirstByName(String name, Sort sort); //Sort 클래스를 활용한 정렬
 
 }
