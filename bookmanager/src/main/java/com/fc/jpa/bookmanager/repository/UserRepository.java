@@ -1,6 +1,8 @@
 package com.fc.jpa.bookmanager.repository;
 
 import com.fc.jpa.bookmanager.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -62,5 +64,10 @@ public interface UserRepository extends JpaRepository<User, Long/*테이블의 P
     List<User> findFirst1ByNameOrderByIdDescEmailAsc(String name);
 
     List<User> findFirstByName(String name, Sort sort); //Sort 클래스를 활용한 정렬
+    //Page 클래스는 Slice를 상속받고 있음
+    //Slice는 전체 데이터의 일부 덩어리를 의미함
+    //Pagable 은 요청 / Page는 응답
+    Page<User> findByName(String name, Pageable paging);
+    Page<User> findAll(Pageable paging);
 
 }

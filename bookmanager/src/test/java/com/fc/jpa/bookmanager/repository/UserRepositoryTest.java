@@ -227,5 +227,12 @@ class UserRepositoryTest {
         );
     }
 
+    @Test
+    public void pagingTest(){
+        init();
+        System.out.println(userRepository.findByName("test3", PageRequest.of(0, 2, Sort.by(Sort.Order.asc("id")))).getTotalPages());
+        System.out.println(userRepository.findAll(PageRequest.of(1,2, Sort.by(Sort.Order.asc("id")))).getContent());
+    }
+
 
 }
