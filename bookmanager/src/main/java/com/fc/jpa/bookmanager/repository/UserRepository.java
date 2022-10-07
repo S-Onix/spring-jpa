@@ -5,10 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long/*테이블의 PK 타입*/> {
@@ -69,5 +71,8 @@ public interface UserRepository extends JpaRepository<User, Long/*테이블의 P
     //Pagable 은 요청 / Page는 응답
     Page<User> findByName(String name, Pageable paging);
     Page<User> findAll(Pageable paging);
+
+    @Query(value = "select * from user_table limit 1;", nativeQuery = true) //네이티브 쿼리로 바로 실행됨
+    Map<String, Object> findRowRecord();
 
 }

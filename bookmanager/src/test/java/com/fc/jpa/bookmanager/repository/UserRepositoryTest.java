@@ -1,5 +1,6 @@
 package com.fc.jpa.bookmanager.repository;
 
+import com.fc.jpa.bookmanager.domain.Gender;
 import com.fc.jpa.bookmanager.domain.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -234,5 +235,29 @@ class UserRepositoryTest {
         System.out.println(userRepository.findAll(PageRequest.of(1,2, Sort.by(Sort.Order.asc("id")))).getContent());
     }
 
+    @Test
+    public void insertAndUpdatable(){
+        User user = new User();
+        user.setName("test");
+        user.setEmail("test@naver.com");
+
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("tttttttt");
+        userRepository.save(user2);
+    }
+
+    @Test
+    public void enumTest(){
+        init();
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setGender(Gender.MALE);
+        userRepository.save(user2);
+        userRepository.findAll().forEach(System.out::println);
+        System.out.println(userRepository.findRowRecord().get("gender"));
+
+
+    }
 
 }
