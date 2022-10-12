@@ -1,5 +1,6 @@
 package com.fc.jpa.bookmanager.domain;
 
+import com.fc.jpa.bookmanager.domain.listener.MyEntityListener;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

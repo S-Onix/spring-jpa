@@ -21,6 +21,8 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     public void init(){
         List<User> saveUsers = new ArrayList<>();
@@ -302,6 +304,21 @@ class UserRepositoryTest {
         userRepository.save(user2);
 
         System.out.println(userRepository.findByEmail("test@naver.com"));
+    }
+
+    @Test
+    public void userHistroyTest(){
+        User user = new User();
+        user.setName("test");
+        user.setEmail("test@naver.com");
+
+        userRepository.save(user);
+        user.setName("test2");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+
     }
 
 }

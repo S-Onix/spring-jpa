@@ -1,5 +1,7 @@
 package com.fc.jpa.bookmanager.domain;
 
+import com.fc.jpa.bookmanager.domain.listener.MyEntityListener;
+import com.fc.jpa.bookmanager.domain.listener.UserEntityListener;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity // JPA에서 관리하고 있는 객체임을 선언 , DB테이블과 연결될 자바객체라는 것을 선언해주는 어노테이션
 @Table(name ="USER_TABLE", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
-@EntityListeners(value = MyEntityListener.class)
+@EntityListeners(value = {MyEntityListener.class, UserEntityListener.class}) //UserHistory 와 비교해보자
 public class User implements Auditable{
     @Id // 테이블의 primary key로 지정
     @GeneratedValue(strategy = GenerationType.SEQUENCE)  //숫자는 자동으로 증가됨 index의 역할
