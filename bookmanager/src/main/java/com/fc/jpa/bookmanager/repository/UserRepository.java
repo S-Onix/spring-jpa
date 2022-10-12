@@ -20,6 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long/*테이블의 P
     //jpa에서 제공하지 않는 메소드를 사용시 혹은 잘못 작성하여 사용시 runtime 오류가 발생함 따라서 JPA에서 제공해주는 메소드는 테스트하여 실행해본다
 
     Optional<User> findByName(String name); //return type이 고정되어있지 않다 => 데이터의 return type 에 맞춰 변형가능하다
+
+    User findByEmail(String email);
     User streamByName(String name);
     User searchByName(String name);
     User getByName(String name);

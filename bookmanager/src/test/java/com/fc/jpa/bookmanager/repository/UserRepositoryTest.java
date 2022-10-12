@@ -260,4 +260,48 @@ class UserRepositoryTest {
 
     }
 
+    @Test
+    public void testListner(){
+        User user = new User();
+        user.setEmail("test@naver.com");
+        user.setName("test");
+
+        userRepository.save(user);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("change");
+        userRepository.save(user2);
+
+        userRepository.deleteById(1L);
+
+
+    }
+
+    @Test
+    public void prePersistTest(){
+        User user = new User();
+        user.setEmail("test@naver.com");
+        user.setName("test");
+        userRepository.save(user);
+
+        System.out.println(userRepository.findByEmail("test@naver.com"));
+
+    }
+
+    @Test
+    public void preUpdateTest() throws InterruptedException {
+        User user = new User();
+        user.setEmail("test@naver.com");
+        user.setName("test");
+        userRepository.save(user);
+
+        Thread.sleep(2000);
+
+        User user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("testChange");
+        userRepository.save(user2);
+
+        System.out.println(userRepository.findByEmail("test@naver.com"));
+    }
+
 }
