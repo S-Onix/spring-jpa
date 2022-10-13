@@ -1,4 +1,4 @@
-package com.fc.jpa.bookmanager.domain;
+package com.fc.jpa.bookmanager.domain.listener;
 
 import java.time.LocalDateTime;
 

@@ -1,5 +1,6 @@
 package com.fc.jpa.bookmanager.domain;
 
+import com.fc.jpa.bookmanager.domain.listener.Auditable;
 import com.fc.jpa.bookmanager.domain.listener.MyEntityListener;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @EntityListeners(value = MyEntityListener.class)
-public class Book implements Auditable{
+public class Book extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;

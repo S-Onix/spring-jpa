@@ -1,7 +1,5 @@
 package com.fc.jpa.bookmanager.domain.listener;
 
-import com.fc.jpa.bookmanager.domain.Auditable;
-
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
