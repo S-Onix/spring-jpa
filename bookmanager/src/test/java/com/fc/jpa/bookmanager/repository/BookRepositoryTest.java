@@ -16,7 +16,8 @@ class BookRepositoryTest {
     void bookTest(){
         Book book = new Book();
         book.setName("book");
-        book.setAuthor("test");
+        book.setAuthorId(1L);
+        book.setPublisherId(1L);
 
         bookRepository.save(book);
         System.out.println(bookRepository.findById(1L));

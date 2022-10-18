@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @EqualsAndHashCode(callSuper = true)
 public class BookReviewInfo extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long bookId;

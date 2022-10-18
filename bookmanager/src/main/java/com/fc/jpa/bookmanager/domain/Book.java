@@ -3,7 +3,9 @@ package com.fc.jpa.bookmanager.domain;
 import com.fc.jpa.bookmanager.domain.listener.Auditable;
 import com.fc.jpa.bookmanager.domain.listener.MyEntityListener;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,26 +13,16 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Data
-@EntityListeners(value = MyEntityListener.class)
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Book extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     private String name;
-    private String author;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String category;
+    private Long authorId;
+    private Long publisherId;
 
-    // >> MyEntityListener 로 옮겨짐 (한 곳에서 관리)
-    /*@PrePersist
-    public void prePersist(){
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        this.updatedAt = LocalDateTime.now();
-    }*/
 }

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @EntityListeners(value = {MyEntityListener.class, UserEntityListener.class}) //UserHistory 와 비교해보자
 public class User extends BaseEntity{
     @Id // 테이블의 primary key로 지정
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)  //숫자는 자동으로 증가됨 index의 역할
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //숫자는 자동으로 증가됨 index의 역할
     private long id;
 
     @NonNull
@@ -42,29 +42,4 @@ public class User extends BaseEntity{
 
 /*    @OneToMany(fetch = FetchType.EAGER)
     private List<Address> addresses;*/
-
-    /*
-    @PrePersist // insert 메서드가 호출되기 전에 실행
-    @PreUpdate // update 메서드 호출되기 전에 실행
-    @PreRemove // delete 메서드가 호출되기 전에 실행
-    @PostPersist // insert 메서드가 호출된 직후에 실행
-    @PostUpdate // update 메서드가 호출된 직후에 실행
-    @PostRemove // delete 메서드가 호출된 직후에 실행
-    @PostLoad // select 메서드가 호출된 직후에 실행
-
-     */
-
-// >> MyEntityListener 로 옮겨짐 (한 곳에서 관리)
-/*    @PrePersist
-    public void prePersist(){
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        this.updatedAt = LocalDateTime.now();
-    }*/
-
-
 }
